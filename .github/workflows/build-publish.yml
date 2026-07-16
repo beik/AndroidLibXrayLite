@@ -43,6 +43,15 @@ jobs:
 
       - name: Build libv2ray
         run: |
+          echo "=== Current directory ==="
+          pwd
+          echo "=== go.mod exists? ==="
+          ls -la go.mod
+          echo "=== go.mod content ==="
+          cat go.mod
+          echo "=== Running go mod tidy ==="
+          go mod tidy
+          echo "=== Running gomobile bind ==="
           gomobile bind -target android -androidapi 21 \
             -ldflags '-checklinkname=0' \
             -tags 'with_quic,with_grpc,with_wireguard,with_utls,with_reality_server,with_docker,with_proxyprotocol' \
