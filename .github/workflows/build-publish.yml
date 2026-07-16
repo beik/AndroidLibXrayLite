@@ -15,10 +15,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Debug go.mod
+        run: |
+          echo "=== go.mod contents ==="
+          cat go.mod
+          echo "=== go.mod head ==="
+          head -5 go.mod
+          echo "=== pwd ==="
+          pwd
+          echo "=== ls ==="
+          ls -la
+  
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version-file: 'go.mod'
+          go-version: '1.26'
 
       - name: Install gomobile
         run: |
