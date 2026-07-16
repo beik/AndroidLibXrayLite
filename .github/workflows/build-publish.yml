@@ -1,0 +1,79 @@
+name: Build and Publish to Maven
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag (e.g., 2.2.5-3-byedpi)'
+        required: true
+        type: string
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.26'
+
+      - name: Install gomobile
+        run: |
+          go install golang.org/x/mobile/cmd/gomobile@latest
+          go install golang.org/x/mobile/cmd/gobind@latest
+          echo "$HOME/go/bin" >> $GITHUB_PATH
+          gomobile init
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Build libv2ray
+        run: |
+          gomobile bind -target android -androidapi 21 \
+            -ldflags '-checklinkname=0' \
+            -tags 'with_quic,with_grpc,with_wireguard,with_utls,with_reality_server,with_docker,with_proxyprotocol' \
+            ./
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Publish to GitHub Packages
+        run: |
+          mkdir -p /tmp/publish
+          cp libv2ray.aar /tmp/publish/
+          cp libv2ray-sources.jar /tmp/publish/
+          
+          cat > /tmp/publish/build.gradle << 'EOF'
+          plugins { id 'maven-publish' }
+          group = 'com.v2ray'
+          version = '2.2.5-3-byedpi'
+          
+          publishing {
+              repositories {
+                  maven {
+                      name = "GitHubPackages"
+                      url = "https://maven.pkg.github.com/beik/singbox-android-libs"
+                      credentials {
+                          username = "beik"
+                          password = "${{ secrets.GITHUB_TOKEN }}"
+                      }
+                  }
+              }
+              publications {
+                  lib(MavenPublication) {
+                      artifactId = 'libv2ray'
+                      artifact("$rootDir/libv2ray.aar")
+                      artifact("$rootDir/libv2ray-sources.jar") { classifier "sources" }
+                      pom { packaging = 'aar' }
+                  }
+              }
+          }
+          EOF
+          
+          cd /tmp/publish
+          gradle publish --no-daemon
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
