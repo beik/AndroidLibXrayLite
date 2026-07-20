@@ -66,7 +66,7 @@ jobs:
           cp libv2ray.aar /tmp/publish/
           cp libv2ray-sources.jar /tmp/publish/
           
-          cat > /tmp/publish/build.gradle << EOF
+          cat > /tmp/publish/build.gradle << 'EOF'
           plugins { id 'maven-publish' }
           group = 'com.v2ray'
           version = '2.2.5-6-byedpi'
@@ -78,15 +78,15 @@ jobs:
                       url = "https://maven.pkg.github.com/beik/singbox-android-libs"
                       credentials {
                           username = "beik"
-                          password = "\${{ secrets.GITHUB_TOKEN }}"
+                          password = System.getenv("GITHUB_TOKEN")
                       }
                   }
               }
               publications {
                   lib(MavenPublication) {
                       artifactId = 'libv2ray'
-                      artifact("\$rootDir/libv2ray.aar")
-                      artifact("\$rootDir/libv2ray-sources.jar") { classifier "sources" }
+                      artifact("$rootDir/libv2ray.aar")
+                      artifact("$rootDir/libv2ray-sources.jar") { classifier "sources" }
                       pom { packaging = 'aar' }
                   }
               }
