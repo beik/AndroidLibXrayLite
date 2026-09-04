@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ inputs.version }}
-      MAVEN_PUBLISH_TOKEN: ${{ secrets.MAVEN_PUBLISH_TOKEN }}
+      MAVEN_PUBLISH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GOPRIVATE: github.com/beik/*
       GONOSUMDB: github.com/beik/*
 
@@ -77,7 +77,7 @@ jobs:
               repositories {
                   maven {
                       name = 'GitHubPackages'
-                      url = 'https://maven.pkg.github.com/beik/xray-android-libs'
+                      url = 'https://maven.pkg.github.com/beik/AndroidLibXrayLite'
                       credentials {
                           username = 'beik'
                           password = System.getenv('MAVEN_PUBLISH_TOKEN')
