@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ inputs.version }}
-      MAVEN_PUBLISH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      MAVEN_PUBLISH_TOKEN: ${{ secrets.MAVEN_PUBLISH_TOKEN }}
       GOPRIVATE: github.com/beik/*
       GONOSUMDB: github.com/beik/*
 
@@ -80,7 +80,7 @@ jobs:
             '  <packaging>aar</packaging>' \
             '</project>' > "$pom"
             
-            base="https://maven.pkg.github.com/${GITHUB_REPOSITORY}/com/v2ray/libv2ray/${VERSION}"
+            base="https://maven.pkg.github.com/beik/singbox-android-libs/com/v2ray/libv2ray/${VERSION}"
             curl --fail-with-body -X PUT -H "Authorization: Bearer ${MAVEN_PUBLISH_TOKEN}" \
               --data-binary "@$pom" "$base/libv2ray-${VERSION}.pom"
             curl --fail-with-body -X PUT -H "Authorization: Bearer ${MAVEN_PUBLISH_TOKEN}" \
