@@ -70,16 +70,15 @@ jobs:
           cp libv2ray.aar libv2ray-sources.jar "$publish_dir/"
 
           pom="$publish_dir/libv2ray-${VERSION}.pom"
-            cat > "$pom" <<EOF
-            <?xml version="1.0" encoding="UTF-8"?>
-            <project xmlns="http://maven.apache.org/POM/4.0.0">
-              <modelVersion>4.0.0</modelVersion>
-              <groupId>com.v2ray</groupId>
-              <artifactId>libv2ray</artifactId>
-              <version>${VERSION}</version>
-              <packaging>aar</packaging>
-            </project>
-            EOF
+          printf '%s\n' \
+            '<?xml version="1.0" encoding="UTF-8"?>' \
+            '<project xmlns="http://maven.apache.org/POM/4.0.0">' \
+            '  <modelVersion>4.0.0</modelVersion>' \
+            '  <groupId>com.v2ray</groupId>' \
+            '  <artifactId>libv2ray</artifactId>' \
+            "  <version>${VERSION}</version>" \
+            '  <packaging>aar</packaging>' \
+            '</project>' > "$pom"
             
             base="https://maven.pkg.github.com/${GITHUB_REPOSITORY}/com/v2ray/libv2ray/${VERSION}"
             curl --fail-with-body -X PUT -H "Authorization: Bearer ${MAVEN_PUBLISH_TOKEN}" \
