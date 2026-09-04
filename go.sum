@@ -2,8 +2,8 @@ github.com/andybalholm/brotli v1.2.0 h1:ukwgCxwYrmACq68yiUqwIWnGY0cTPox/M94sVwTo
 github.com/andybalholm/brotli v1.2.0/go.mod h1:rzTDkvFWvIrjDXZHkuS16NPggd91W3kUSvPlQ1pLaKY=
 github.com/apernet/quic-go v0.59.1-0.20260425001925-6c6cc9bcb716 h1:J1O+xpLuJWkdYbw5JPGwBqIHs2J8tiEP7Py9lPqkN2I=
 github.com/apernet/quic-go v0.59.1-0.20260425001925-6c6cc9bcb716/go.mod h1:Npbg8qBtAZlsAB3FWmqwlVh5jtVG6a4DlYsOylUpvzA=
-github.com/beik/xray-core-byedpi v0.0.0-20260904134133-9067c56f3da2 h1:73h7mA9yHHX318rwnpQic3TH5pBJI74U4y/DCmbOBuw=
-github.com/beik/xray-core-byedpi v0.0.0-20260904134133-9067c56f3da2/go.mod h1:Jts8yHqPCpvsdL5CW5xMd8H9d2fkg1cILeBNqEwRXNw=
+github.com/beik/xray-core-byedpi v0.0.0-20260904135629-0914fe77c5a4 h1:ap0w2lKHZmsGIzUmJbu3SJDg3ynxFMVk5KiXOiLxKpI=
+github.com/beik/xray-core-byedpi v0.0.0-20260904135629-0914fe77c5a4/go.mod h1:Jts8yHqPCpvsdL5CW5xMd8H9d2fkg1cILeBNqEwRXNw=
 github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=
 github.com/cespare/xxhash/v2 v2.3.0/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
 github.com/cloudflare/circl v1.6.4 h1:pOXuDTCEYyzydgUpQ0CQz3LsinKjiSk6nNP5Lt5K64U=
