@@ -95,4 +95,4 @@ jobs:
           }
           EOF
           cd "$publish_dir"
-          gradle publish --no-daemon
+          gradle publish --no-daemon --info --stacktrace
