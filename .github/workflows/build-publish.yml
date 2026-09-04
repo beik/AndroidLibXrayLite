@@ -68,31 +68,23 @@ jobs:
           publish_dir=/tmp/libv2ray-publish
           mkdir -p "$publish_dir"
           cp libv2ray.aar libv2ray-sources.jar "$publish_dir/"
-          cat > "$publish_dir/build.gradle" << 'EOF'
-          plugins { id 'maven-publish' }
-          group = 'com.v2ray'
-          version = System.getenv('VERSION')
 
-          publishing {
-              repositories {
-                  maven {
-                      name = 'GitHubPackages'
-                      url = 'https://maven.pkg.github.com/beik/AndroidLibXrayLite'
-                      credentials {
-                          username = 'beik'
-                          password = System.getenv('MAVEN_PUBLISH_TOKEN')
-                      }
-                  }
-              }
-              publications {
-                  libv2ray(MavenPublication) {
-                      artifactId = 'libv2ray'
-                      artifact("$rootDir/libv2ray.aar")
-                      artifact("$rootDir/libv2ray-sources.jar") { classifier = 'sources' }
-                      pom { packaging = 'aar' }
-                  }
-              }
-          }
-          EOF
-          cd "$publish_dir"
-          gradle publish --no-daemon --info --stacktrace
+          pom="$publish_dir/libv2ray-${VERSION}.pom"
+            cat > "$pom" <<EOF
+            <?xml version="1.0" encoding="UTF-8"?>
+            <project xmlns="http://maven.apache.org/POM/4.0.0">
+              <modelVersion>4.0.0</modelVersion>
+              <groupId>com.v2ray</groupId>
+              <artifactId>libv2ray</artifactId>
+              <version>${VERSION}</version>
+              <packaging>aar</packaging>
+            </project>
+            EOF
+            
+            base="https://maven.pkg.github.com/${GITHUB_REPOSITORY}/com/v2ray/libv2ray/${VERSION}"
+            curl --fail-with-body -X PUT -H "Authorization: Bearer ${MAVEN_PUBLISH_TOKEN}" \
+              --data-binary "@$pom" "$base/libv2ray-${VERSION}.pom"
+            curl --fail-with-body -X PUT -H "Authorization: Bearer ${MAVEN_PUBLISH_TOKEN}" \
+              --data-binary "@$publish_dir/libv2ray.aar" "$base/libv2ray-${VERSION}.aar"
+            curl --fail-with-body -X PUT -H "Authorization: Bearer ${MAVEN_PUBLISH_TOKEN}" \
+              --data-binary "@$publish_dir/libv2ray-sources.jar" "$base/libv2ray-${VERSION}-sources.jar"
