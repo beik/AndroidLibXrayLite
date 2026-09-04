@@ -77,7 +77,7 @@ jobs:
               repositories {
                   maven {
                       name = 'GitHubPackages'
-                      url = 'https://maven.pkg.github.com/beik/singbox-android-libs'
+                      url = 'https://maven.pkg.github.com/beik/xray-android-libs'
                       credentials {
                           username = 'beik'
                           password = System.getenv('MAVEN_PUBLISH_TOKEN')
