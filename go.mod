@@ -57,4 +57,4 @@ require (
 	lukechampine.com/blake3 v1.4.1 // indirect
 )
 
-replace github.com/xtls/xray-core => github.com/beik/xray-core-byedpi v0.0.0-20260904135629-0914fe77c5a4
+replace github.com/xtls/xray-core => github.com/beik/xray-core-byedpi v0.0.0-20260904142907-40d3df2bac4c
