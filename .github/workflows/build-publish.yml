@@ -40,6 +40,12 @@ jobs:
           git diff --exit-code -- go.mod go.sum
           go test ./...
 
+      - name: Verify ByeDPI core replacement
+        run: |
+          expected='github.com/beik/xray-core-byedpi v0.0.0-20260905150725-f9da94edbae4'
+          resolved="$(go list -m -f '{{if .Replace}}{{.Replace.Path}} {{.Replace.Version}}{{end}}' github.com/xtls/xray-core)"
+          test "$resolved" = "$expected"
+
       - name: Install gomobile
         run: |
           go install golang.org/x/mobile/cmd/gomobile@latest
